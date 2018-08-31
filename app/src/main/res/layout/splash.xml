@@ -24,25 +24,6 @@
         android:padding="8dp"
         />
 
-    <Button
-        android:id="@+id/btn_welcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="28dp"
-        android:layout_marginLeft="28dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="Show Flags"
-        android:textSize="28dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/rounded_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/Linear"
-        android:layout_marginBottom="75dp"
-
-        />
-
     <LinearLayout
         android:id="@+id/Linear"
         android:layout_width="match_parent"
@@ -52,6 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingLeft="64dp"
         android:paddingBottom="8dp"
+        android:layout_marginBottom="10dp"
         >
 
         <TextView
