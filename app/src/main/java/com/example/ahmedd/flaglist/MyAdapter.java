@@ -3,6 +3,7 @@ package com.example.ahmedd.flaglist;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,58 +12,51 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.zip.Inflater;
 
 
-public class  MyAdapter extends ArrayAdapter<String> {
-    String names[];
-    int flags[];
-    Context mContext;
+public class  MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
-    public MyAdapter(@NonNull Context context, String countryNames[]){
+    private List<ListItem> list;
+    private Context context;
 
-        super(context, R.layout.listview_item);
-        this.names = countryNames;
-        this.mContext = context;
-    }
-
-    public MyAdapter(@NonNull Context context, String countryNames[] ,int countryFlags[] ) {
-        super(context, R.layout.listview_item);
-        this.names = countryNames;
-        this.flags = countryFlags;
-        this.mContext = context;
-
-    }
-
-    @Override
-    public int getCount() {
-        return names.length;
+    public MyAdapter(List<ListItem> list, Context context) {
+        this.list = list;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-        ViewHolder mViewHolder = new ViewHolder();
-        if (convertView == null) {
-           LayoutInflater mInflater = (LayoutInflater)
-                   mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-           convertView = mInflater.inflate(R.layout.listview_item, parent, false);
-           mViewHolder.mFlag = (ImageView) convertView.findViewById(R.id.imageView);
-           mViewHolder.mName = (TextView) convertView.findViewById(R.id.textView);
-           convertView.setTag(mViewHolder);
-       }else {
-           mViewHolder = (ViewHolder) convertView.getTag();
-       }
-           mViewHolder.mFlag.setImageResource(flags[position]);
-           mViewHolder.mName.setText(names[position]);
-
-        return convertView;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.listview_item,parent,false);
+        return new ViewHolder(v);
     }
 
-    static class ViewHolder{
-        ImageView mFlag;
-        TextView mName;
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ListItem listItem = list.get(position);
+
+        holder.flagImg.setImageResource(listItem.getImg());
+        holder.txtCountry.setText(listItem.getCountryName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public ImageView flagImg;
+        public TextView txtCountry;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            flagImg = (ImageView) itemView.findViewById(R.id.flagImg);
+            txtCountry =(TextView) itemView.findViewById(R.id.txtCountry);
+
+        }
     }
 }
